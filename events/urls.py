@@ -7,6 +7,7 @@ urlpatterns = [
     # path: whole urls /
     # slug: hyphen-or_underscores_stuff
     # UID: universally unique identifier
-    # path('', views.home, name="home"),
+    
+    path('', views.home, name="home"),
     path('<int:year>/<str:month>/', views.home, name="home"),
 ]
