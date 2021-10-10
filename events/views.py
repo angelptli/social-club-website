@@ -1,9 +1,37 @@
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
 import calendar
 from calendar import HTMLCalendar
 from datetime import datetime
 from . import models
 from .models import Event
+from .forms import VenueForm
+
+
+def add_venue(request):
+    # If user filled out form and clicked submit button, they have posted
+    # their form. If their form has posted then take the form and pass
+    # into VenueForm. Else notify that the form has already been submitted.
+    submitted = False
+    if request.method == "POST":
+        form = VenueForm(request.POST)
+
+        # If input is valid then save to database
+        if form.is_valid():
+            form.save()
+
+            # Return with submitted true tag
+            return HttpResponseRedirect('/add_venue?submitted=True')
+    else:
+        form = VenueForm
+        if 'submitted' in request.GET:
+            submitted = True
+
+    return render(request,
+        'events/add_venue.html', {
+        "form":form,
+        "submitted": submitted,
+        })
 
 
 def all_events(request):
