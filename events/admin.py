@@ -3,6 +3,23 @@ from .models import Venue
 from .models import MyClubUser
 from .models import Event
 
-admin.site.register(Venue)
+# admin.site.register(Venue)
 admin.site.register(MyClubUser)
-admin.site.register(Event)
+# admin.site.register(Event)
+
+@admin.register(Venue)
+class VenueAdmin(admin.ModelAdmin):
+    list_display = ('name', 'address', 'phone')
+    # Order by venue name a-z, -name for z-a
+    ordering = ('name',)
+    search_fields = ('name', 'address')
+
+
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    # fields in the edit page
+    fields = (('name', 'venue'), 'event_date', 'description', 'manager')
+    # These are in the display page
+    list_display = ('name', 'event_date', 'venue')
+    list_filter = ('event_date', 'venue')
+    ordering = ('-event_date',)
