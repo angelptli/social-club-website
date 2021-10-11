@@ -8,6 +8,20 @@ from .models import Event, Venue
 from .forms import VenueForm, EventForm
 
 
+def delete_event(request, event_id):
+    event = Event.objects.get(pk=event_id)
+    event.delete()
+
+    return redirect('list-events')
+
+
+def delete_venue(request, venue_id):
+    venue = Venue.objects.get(pk=venue_id)
+    venue.delete()
+    
+    return redirect('list-venues')
+
+
 def add_event(request):
     # If user filled out form and clicked submit button, they have posted
     # their form. If their form has posted then take the form and pass
