@@ -5,7 +5,33 @@ from calendar import HTMLCalendar
 from datetime import datetime
 from . import models
 from .models import Event, Venue
-from .forms import VenueForm
+from .forms import VenueForm, EventForm
+
+
+def add_event(request):
+    # If user filled out form and clicked submit button, they have posted
+    # their form. If their form has posted then take the form and pass
+    # into VenueForm. Else notify that the form has already been submitted.
+    submitted = False
+    if request.method == "POST":
+        form = EventForm(request.POST)
+
+        # If input is valid then save to database
+        if form.is_valid():
+            form.save()
+
+            # Return with submitted true tag
+            return HttpResponseRedirect('/add_event?submitted=True')
+    else:
+        form = EventForm
+        if 'submitted' in request.GET:
+            submitted = True
+
+    return render(request,
+        'events/add_event.html', {
+        "form":form,
+        "submitted": submitted,
+        })
 
 
 def update_venue(request, venue_id):
