@@ -6,6 +6,29 @@ from datetime import datetime
 from . import models
 from .models import Event, Venue
 from .forms import VenueForm, EventForm
+import csv
+
+
+def venue_csv(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=venues.csv'
+
+    # Create a csv writer
+    writer = csv.writer(response)
+
+    # Designate the model
+    venues = Venue.objects.all()
+
+    # Add column headings to the csv file
+    writer.writerow(['Venue Name', 'Address', 'Zip Code',
+                     'Phone', 'Website', 'Email Adress'])
+
+    # Loop through and output
+    for venue in venues:
+        writer.writerow([venue.name, venue.address, venue.zip_code,
+                         venue.phone, venue.web, venue.email_address])
+
+    return response
 
 
 # Generate Text File Venue List
@@ -27,8 +50,8 @@ def venue_text(request):
     # lines = ["This is line 1\n",
     #          "This is line 3\n",
     #          "This is line 4\n",]
-    # # Write to text file
 
+    # Write to text file
     response.writelines(lines)
 
     return response
