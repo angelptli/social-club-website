@@ -50,6 +50,22 @@ def update_venue(request, venue_id):
         })
 
 
+def update_event(request, event_id):
+    event = Event.objects.get(pk=event_id)
+    form = EventForm(request.POST or None, instance=event)
+
+    if form.is_valid():
+        form.save()
+
+        return redirect('list-events')
+
+    return render(request,
+        'events/update_event.html', {
+        "event": event,
+        "form":form,
+        })
+
+
 def search_venues(request):
     if request.method == "POST":
         searched = request.POST.get('searched')
