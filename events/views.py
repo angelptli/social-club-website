@@ -8,11 +8,16 @@ from .models import Event, Venue
 from .forms import VenueForm, EventForm
 import csv
 
+# PDF Imports
 from django.http import FileResponse
 import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
+
+# Pagination Imports
+from django.core.paginator import Paginator
+
 
 # Generate a PDF File Venue List 
 def venue_pdf(request):
@@ -211,12 +216,20 @@ def show_venue(request, venue_id):
 
 
 def list_venues(request):
-    # Order by name. Order randomly by using '?'.
-    venue_list = Venue.objects.all().order_by('name')
+    # # Order by name. Order randomly by using '?'.
+    # venue_list = Venue.objects.all().order_by('name')
+    venue_list = Venue.objects.all()
+
+    # Set up Pagination
+    p = Paginator(Venue.objects.all(), 2)
+    page = request.GET.get('page')
+    venues = p.get_page(page)
 
     return render(request,
         'events/venue.html', {
-        "venue_list": venue_list})
+        "venue_list": venue_list,
+        "venues": venues
+        })
 
 
 def add_venue(request):
