@@ -13,7 +13,10 @@
       <!-- {{ venue }} - {{ venue.web }}<br/> -->
 
       
-      <a href="{% url 'show-venue' venue.id %}">{{ venue }}</a><br/>
+      <a href="{% url 'show-venue' venue.id %}">{{ venue }}</a>
+        </td>
+        <td align="right">
+          <a href="{% url 'update-venue' venue.id %}" class="btn btn-outline-secondary btn-sm">Update</a>
         </td>
       </tr>
     {% endfor %}
