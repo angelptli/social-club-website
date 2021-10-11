@@ -8,6 +8,24 @@ from .models import Event, Venue
 from .forms import VenueForm
 
 
+def search_venues(request):
+    if request.method == "POST":
+        searched = request.POST.get('searched')
+
+        # Allow partial search words for venue searches
+        venues = Venue.objects.filter(name__contains=searched)
+
+        return render(request,
+            'events/search_venues.html', {
+            "searched":searched,
+            "venues":venues})
+
+    else:
+        return render(request,
+            'events/search_venues.html', {
+            })
+
+
 def show_venue(request, venue_id):
     venue = Venue.objects.get(pk=venue_id)
 
@@ -22,6 +40,7 @@ def list_venues(request):
     return render(request,
         'events/venue.html', {
         "venue_list": venue_list})
+
 
 def add_venue(request):
     # If user filled out form and clicked submit button, they have posted

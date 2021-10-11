@@ -2,18 +2,18 @@
 
 {% block content %}
 
-<center>
-  <h1>Events For {{ month }} {{ year }}</h1>
-
-  <!-- {{ month_number }} -->
-
-  As of {{ time }}
-  <br /><br />
-
-  <!-- Turn on safe filter for self-testing -->
-  {{ cal|safe }}
-  <br /><br /><br /><br />
-  Copyright (c) {{ current_year }}
-</center>
+  <center>
+    <h1>Events For {{ month }} {{ year }}</h1>
+  
+    <!-- {{ month_number }} -->
+  
+    As of {{ time }}
+    <br /><br />
+  
+    <!-- Turn on safe filter for self-testing -->
+    {{ cal|safe }}
+    <br /><br /><br /><br />
+    Copyright (c) {{ current_year }}
+  </center>
 
 {% endblock %}
