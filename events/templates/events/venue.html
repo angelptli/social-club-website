@@ -2,24 +2,24 @@
 
 {% block content %}
 
-    <h1>Venues...</h1>
-    <br/>
+  <h1>Venues</h1>
+  <br/>
 
-    <table class="table table-striped table-hover table-bordered">
-    {% for venue in venue_list %}
-      <tr>
-        <td>
-      <!-- Display venue names with web links beside each -->
-      <!-- {{ venue }} - {{ venue.web }}<br/> -->
+  <table class="table table-striped table-hover table-bordered">
+  {% for venue in venue_list %}
+    <tr>
+      <td>
+    <!-- Display venue names with web links beside each -->
+    <!-- {{ venue }} - {{ venue.web }}<br/> -->
       
-      <a href="{% url 'show-venue' venue.id %}">{{ venue }}</a>
-        </td>
-        <td align="right"> 
-          <a href="{% url 'update-venue' venue.id %}" class="btn btn-outline-secondary btn-sm">Update</a>
-          <a href="{% url 'delete-venue' venue.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
-        </td>
-      </tr>
-    {% endfor %}
+    <a href="{% url 'show-venue' venue.id %}">{{ venue }}</a>
+      </td>
+      <td align="right"> 
+        <a href="{% url 'update-venue' venue.id %}" class="btn btn-outline-secondary btn-sm">Update</a>
+        <a href="{% url 'delete-venue' venue.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
+      </td>
+    </tr>
+  {% endfor %}
   </table>
 
 {% endblock %}
