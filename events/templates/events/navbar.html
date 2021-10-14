@@ -29,16 +29,20 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'venue-csv' %}">Venue CSV File</a>
+          <a class="nav-link" href="{% url 'venue-csv' %}">Venue CSV File</a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="{% url 'venue-pdf' %}">Venue PDF File</a>
+          <a class="nav-link" href="{% url 'venue-pdf' %}">Venue PDF File</a>
         </li>
 
-        <li class="nav-item">
+        {% if user.is_authenticated %}
+          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+        {% else %}
+          <li class="nav-item">
             <a class="nav-link" href="{% url 'login' %}">Login</a>
-        </li>
+          </li>
+        {% endif %}
 
       </ul>
         <form class="d-flex" method=POST action="{% url 'search-venues' %}">
