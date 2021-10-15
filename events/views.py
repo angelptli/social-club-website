@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 import calendar
 from calendar import HTMLCalendar
@@ -115,12 +116,15 @@ def venue_text(request):
     return response
 
 
-
 def delete_event(request, event_id):
     event = Event.objects.get(pk=event_id)
-    event.delete()
-
-    return redirect('list-events')
+    if request.user == event.manager:
+        event.delete()
+        messages.success(request, ("Event Deleted"))
+        return redirect('list-events')
+    else:
+        messages.success(request, ("You Aren't Authorized To Delete This Event"))
+        return redirect('list-events')
 
 
 def delete_venue(request, venue_id):
