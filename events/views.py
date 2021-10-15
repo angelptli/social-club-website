@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+# Import user model from Django
+from django.contrib.auth.models import User
 from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
 import calendar
@@ -237,10 +239,13 @@ def search_venues(request):
 
 def show_venue(request, venue_id):
     venue = Venue.objects.get(pk=venue_id)
+    venue_owner = User.objects.get(pk=venue.owner)
 
     return render(request,
         'events/show_venue.html', {
-        "venue": venue})
+        "venue": venue,
+        "venue_owner": venue_owner
+        })
 
 
 def list_venues(request):
