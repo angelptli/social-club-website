@@ -9,17 +9,18 @@
   
 {% endif %}
 
-  <h1>Sign Up</h1>
-  <br/>
-
-    <form action="{% url 'register-user' %}" method=POST>
-      {% csrf_token %}
-      {{ form.as_p }}
-
-      <br/><br/>
-      <input type="submit" value="Submit" class="btn btn-dark">
-    </form>
+  <div class="shadow p-4 mb-5 bg-body rounded">
+    <h1>Sign Up</h1>
+    <br/>
   
+      <form action="{% url 'register-user' %}" method=POST>
+        {% csrf_token %}
+        {{ form.as_p }}
+  
+        <br/><br/>
+        <input type="submit" value="Submit" class="btn btn-dark">
+      </form>
+  </div>
   <br/><br/>
 
 {% endblock %}
