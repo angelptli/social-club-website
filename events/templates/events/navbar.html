@@ -14,7 +14,9 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
             <li><a class="dropdown-item" href="{% url 'list-events' %}">All Events</a></li>
-            <li><a class="dropdown-item" href="{% url 'add-event' %}">Add Event</a></li>
+            {% if user.is_authenticated %}
+              <li><a class="dropdown-item" href="{% url 'add-event' %}">Add Event</a></li>
+            {% endif %}
           </ul>
         </li>
 
@@ -24,7 +26,9 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
             <li><a class="dropdown-item" href="{% url 'list-venues' %}">All Venues</a></li>
-            <li><a class="dropdown-item" href="{% url 'add-venue' %}">Add Venue</a></li>
+            {% if user.is_authenticated %}
+              <li><a class="dropdown-item" href="{% url 'add-venue' %}">Add Venue</a></li>
+            {% endif %}
           </ul>
         </li>
 

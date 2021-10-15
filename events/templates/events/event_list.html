@@ -26,10 +26,12 @@
         </ul>
       </p>
     </div>
-    <div class="card-footer text-muted">
+    {% if user.is_authenticated %}
+      <div class="card-footer text-muted"></div>
         <a href="{% url 'update-event' event.id %}" class="btn btn-outline-secondary btn-sm">Update Event</a>
         <a href="{% url 'delete-event' event.id %}" class="btn btn-outline-danger btn-sm">Delete Event</a>
-    </div>
+      </div>
+    {% endif %}
   </div>
   <br /><br />
 {% endfor %}
