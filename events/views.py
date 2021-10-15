@@ -5,7 +5,7 @@ from calendar import HTMLCalendar
 from datetime import datetime
 from . import models
 from .models import Event, Venue
-from .forms import VenueForm, EventForm
+from .forms import VenueForm, EventForm, EventFormAdmin
 import csv
 
 # PDF Imports
@@ -136,16 +136,36 @@ def add_event(request):
     # into VenueForm. Else notify that the form has already been submitted.
     submitted = False
     if request.method == "POST":
-        form = EventForm(request.POST)
+        if request.user.is_superuser:
+            form = EventFormAdmin(request.POST)
 
-        # If input is valid then save to database
-        if form.is_valid():
-            form.save()
+             # If input is valid then save to database
+            if form.is_valid():
+                form.save()
 
-            # Return with submitted true tag
-            return HttpResponseRedirect('/add_event?submitted=True')
+                # Return with submitted true tag
+                return HttpResponseRedirect('/add_event?submitted=True')
+
+        else:
+            form = EventForm(request.POST)
+            
+            # If input is valid then save to database
+            if form.is_valid():
+                event = form.save(commit=False)
+                event.manager = request.user  # manager assigned as user
+                event.save()
+                # form.save()
+
+                # Return with submitted true tag
+                return HttpResponseRedirect('/add_event?submitted=True')
+
     else:
-        form = EventForm
+        # Just goes to the page, not submitting form
+        if request.user.is_superuser:
+            form = EventFormAdmin
+        else:
+            form = EventForm
+
         if 'submitted' in request.GET:
             submitted = True
 
@@ -174,7 +194,11 @@ def update_venue(request, venue_id):
 
 def update_event(request, event_id):
     event = Event.objects.get(pk=event_id)
-    form = EventForm(request.POST or None, instance=event)
+    if request.user.is_superuser:
+        form = EventFormAdmin(request.POST or None, instance=event)
+    else:
+        form = EventForm(request.POST or None, instance=event)
+
 
     if form.is_valid():
         form.save()
