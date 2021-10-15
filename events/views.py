@@ -244,7 +244,10 @@ def add_venue(request):
 
         # If input is valid then save to database
         if form.is_valid():
-            form.save()
+            venue = form.save(commit=False)
+            venue.owner = request.user.id  # logged in user
+            venue.save()
+            # form.save()
 
             # Return with submitted true tag
             return HttpResponseRedirect('/add_venue?submitted=True')
