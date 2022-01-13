@@ -1,5 +1,5 @@
 asgiref==3.4.1
-Django==3.2.8
+Django==3.2.11
 django-ckeditor==6.1.0
 django-js-asset==1.2.2
 Pillow==9.0.0
